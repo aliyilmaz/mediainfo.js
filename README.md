@@ -28,6 +28,21 @@ Add it to your project.
 <script  src="script.js"></script>
 ```
 
+Run it.
+
+```javascript
+<script>
+MediaInfo({ format: 'JSON' }, (mediainfo) => {
+    fileinput.addEventListener('change', () => {
+    onChangeFile(mediainfo);
+    setTimeout(() => { 
+        console.log(MediaInfoOutput);
+        output.value = JSON.stringify(MediaInfoOutput, null, 2);
+    }, 500);
+    });
+});
+</script>
+```
 
 ## License:
 
