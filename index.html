@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>mediainfo.js</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="shortcut icon" href="#" type="image/x-icon">
+
+</head>
+<body>
+<div id="wrapper">
+  <input type="file" id="fileinput" name="fileinput" multiple />
+  <textarea id="output"></textarea>
+</div>
+
+  <script src='mediainfo.min.js'></script>
+  <script  src="./script.js"></script>
+  <script>
+    MediaInfo({ format: 'JSON' }, (mediainfo) => {
+      fileinput.addEventListener('change', () => {
+        onChangeFile(mediainfo);
+        setTimeout(() => { 
+          console.log(MediaInfoOutput);
+          output.value = JSON.stringify(MediaInfoOutput, null, 2);
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>
