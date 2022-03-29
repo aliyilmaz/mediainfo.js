@@ -1,5 +1,5 @@
 # mediainfo.js
-mediaInfo.js serves to present a useful composite display of the most relevant technical and tag data for video and audio files.
+mediainfo.js serves to present a useful composite display of the most relevant technical and tag data for video and audio files.
 
 ## The MediaInfo data display includes:
 * **Container:** format, profile, commercial name of the format, duration, overall bit rate, writing application and library, title, author, director, album, track number, date, duration...
