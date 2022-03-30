@@ -32,14 +32,10 @@ Run it.
 
 ```javascript
 <script>
-MediaInfo({ format: 'JSON' }, (mediainfo) => {
-    fileinput.addEventListener('change', () => {
-    onChangeFile(mediainfo);
-    setTimeout(() => { 
-        console.log(MediaInfoOutput);
-        output.value = JSON.stringify(MediaInfoOutput, null, 2);
-    }, 500);
-    });
+getmediainfojs('#fileinput', (response) => {
+    console.log(response);
+    document.querySelector('#output').value = JSON.stringify(response, null, 2);
+    console.log('or code');
 });
 </script>
 ```
