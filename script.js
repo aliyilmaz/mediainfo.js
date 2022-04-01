@@ -29,7 +29,22 @@ function getmediainfojs(inputElement, callback) {
       .then((result) => {
         MediaInfoOutput[i] = JSON.parse(result);
         delete MediaInfoOutput[i]['creatingLibrary'];
+
+        if (
+          MediaInfoOutput[i]['media']['track'][1]['@type'] === 'Audio' &&
+          (MediaInfoOutput[i]['media']['track'][1]['Format'] === 'AAC') 
+        ) {
+          let audioElement = document.createElement('audio');
+          audioElement.src = URL.createObjectURL(file);
+          audioElement.onloadedmetadata = function() {
+            MediaInfoOutput[i]['media']['track'][0]['Duration'] = String(audioElement.duration);
+            MediaInfoOutput[i]['media']['track'][1]['Duration'] = String(audioElement.duration);
+          };
+          audioElement.remove();
+        }
+        
         MediaInfoOutput[i]['media']['filename'] = file.name;
+
       });
   }
 
