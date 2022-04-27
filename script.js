@@ -2,16 +2,34 @@
 
 function getmediainfojs(inputElement, callback) {
   inputElement = document.querySelector(inputElement),
-    MediaInfoOutput = [];
-  
+ 
   MediaInfo({ format: 'JSON' }, (mediainfo) => {
-    inputElement.addEventListener('change', () => {
+    inputElement.addEventListener('change', (e) => {
+      
       onChangeFile(mediainfo);
+
+      originalStyle = inputElement.style;
+      numb = e.target.files.length * 200;
+      intervalId = setInterval(() => { 
+        inputElement.style.borderImage = 'linear-gradient(' + numb * 10 + 'deg, turquoise, greenyellow) 1';
+        inputElement.style.borderBottom = '8px solid';
+       
+        if (numb <= 0) {
+          inputElement.style = originalStyle;
+          clearInterval(intervalId);
+        } 
+        
+        numb = numb-200;
+      }, 200);
+      
       setTimeout(() => { 
-        if(callback) callback(MediaInfoOutput);
-      }, 3000);
+        if (callback) callback(MediaInfoOutput);
+      }, e.target.files.length * 200);
+      
     });
   });
+
+  
 
   function get_file_info(mediainfo, file, i=0) {
     let getSize = () => file.size;
@@ -70,6 +88,7 @@ function getmediainfojs(inputElement, callback) {
 
   async function onChangeFile(mediainfo) {
     let file;
+    MediaInfoOutput = [];
     if (inputElement.files.length >= 2) {
       for (let i = 0; i < inputElement.files.length; i++) {
         file = inputElement.files[i];
