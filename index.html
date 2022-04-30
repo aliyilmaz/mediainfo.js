@@ -9,16 +9,50 @@
 </head>
 <body>
 <div id="wrapper">
+  <!-- <input type="file" id="fileinput" name="fileinput" accept=".jpeg, .jpg, .png" multiple />
+  <input type="file" id="fileinput" name="fileinput" accept=".mp3, .wav, .flac, .aac, .m4a" multiple />
+  <input type="file" id="fileinput" name="fileinput" accept=".mov, .mp4, .webm, .m4v, .mkv" multiple /> -->
   <input type="file" id="fileinput" name="fileinput" multiple />
+  <div id="output"></div>
   <textarea id="output"></textarea>
 </div>
 
   <script src='mediainfo.min.js'></script>
   <script  src="./script.js"></script>
   <script>
-    getmediainfojs('#fileinput', (response) => {
+    let divOutputHtml = '',
+        divOutputElement = document.body.querySelector('div#output');
+
+    getmediainfojs('#fileinput', (response, e) => {
+      divOutputElement.innerHTML = '';
+
+      for (let index = 0; index < e.target.files.length; index++) {
+        mime_type = response[index]['media']['mime_type'].split('/')[0];
+        filename = truncate(basename(response[index]['media']['filename']), 60);
+        console.log(filename);
+
+        // jpg,jpeg,png 
+        if(mime_type == 'image'){
+          divOutputHtml = '<img src="'+getBlobUrl(e.target.files[index])+'" title="'+filename+'">';
+        }
+
+        // mov,mp4,webm,m4v,mkv
+        if(mime_type == 'video'){
+          divOutputHtml = '<video src="'+getBlobUrl(e.target.files[index])+'" controls title="'+filename+'"></video>';
+        }
+
+        // mp3,wav,flac,aac,m4a
+        if(mime_type == 'audio'){
+          divOutputHtml = '<audio src="'+getBlobUrl(e.target.files[index])+'" controls title="'+filename+'"></audio>';
+        }
+
+        // or...
+        divOutputElement.appendChild(stringToHTML(divOutputHtml));
+      }
+
+      
       console.log(response);
-      document.querySelector('#output').value = JSON.stringify(response, null, 2);
+      document.querySelector('textarea#output').value = JSON.stringify(response, null, 2);
       console.log('or code');
     });
   </script>
