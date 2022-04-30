@@ -58,10 +58,13 @@ function getmediainfojs(inputElement, callback) {
           ))
           {
 
-           stringToHTML('<audio src="'+getBlobUrl(file)+'" type="'+getMimeType(file.name)+'"></audio>').onloadedmetadata = function() {
-              MediaInfoOutput[i]['media']['track'][0]['Duration'] = String(audioElement.duration);
-              MediaInfoOutput[i]['media']['track'][1]['Duration'] = String(audioElement.duration);
-            };
+          let audioElement = document.createElement('audio');
+          audioElement.src = URL.createObjectURL(file);
+          audioElement.onloadedmetadata = function() {
+            MediaInfoOutput[i]['media']['track'][0]['Duration'] = String(audioElement.duration);
+            MediaInfoOutput[i]['media']['track'][1]['Duration'] = String(audioElement.duration);
+          };
+          audioElement.remove();
            
           }
 
