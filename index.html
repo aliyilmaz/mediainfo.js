@@ -31,17 +31,17 @@
         filename = truncate(basename(response[index]['media']['filename']), 60);
         console.log(filename);
 
-        // jpg,jpeg,png 
+        // .jpeg, .jpg, .png, .webp, .svg, .gif
         if(mime_type == 'image'){
           divOutputHtml = '<img src="'+getBlobUrl(e.target.files[index])+'" title="'+filename+'">';
         }
 
-        // mov,mp4,webm,m4v,mkv
+        // .mov, .mp4, .webm, .m4v, .mkv
         if(mime_type == 'video'){
           divOutputHtml = '<video src="'+getBlobUrl(e.target.files[index])+'" controls title="'+filename+'"></video>';
         }
 
-        // mp3,wav,flac,aac,m4a
+        // .mp3, .wav, .flac, .aac, .m4a
         if(mime_type == 'audio'){
           divOutputHtml = '<audio src="'+getBlobUrl(e.target.files[index])+'" controls title="'+filename+'"></audio>';
         }
