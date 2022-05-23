@@ -2,29 +2,29 @@
 
 function getmediainfojs(inputElement, callback) {
   inputElement = document.querySelector(inputElement);
- 
-  MediaInfo({ format: 'JSON' }, (mediainfo) => {
-    inputElement.addEventListener('change', (e) => {
-      
-      onChangeFile(mediainfo);
+  inputElement.addEventListener('change', (e) => {
+    MediaInfo({ format: 'JSON' }, (mediainfo) => {
 
-      originalStyle = inputElement.style;
-      numb = 4000;
-      intervalId = setInterval(() => { 
-        inputElement.style.borderImage = 'linear-gradient(' + numb * 10 + 'deg, turquoise, greenyellow) 1';
-        inputElement.style.borderBottom = '8px solid';
-       
-        if (numb <= 0) {
-          inputElement.style = originalStyle;
-          clearInterval(intervalId);
-        } 
+        onChangeFile(mediainfo);
+
+        originalStyle = inputElement.style;
+        numb = 4000;
+        intervalId = setInterval(() => { 
+          inputElement.style.borderImage = 'linear-gradient(' + numb * 10 + 'deg, turquoise, greenyellow) 1';
+          inputElement.style.borderBottom = '8px solid';
         
-        numb = numb-200;
-      }, 200);
-      
-      setTimeout(() => { 
-        if (callback) callback(MediaInfoOutput,e);
-      }, 4000);
+          if (numb <= 0) {
+            inputElement.style = originalStyle;
+            clearInterval(intervalId);
+          } 
+          
+          numb = numb-200;
+        }, 200);
+        
+        setTimeout(() => { 
+          if (callback) callback(MediaInfoOutput,e);
+        }, 4000);
+        
       
     });
   });
